@@ -18,17 +18,6 @@ const errorHandler = require('./middleware/errorHandler');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session configuration
-app.use(session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production (HTTPS)
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    }
-}));
 
 // CORS middleware (if needed for frontend testing)
 app.use((req, res, next) => {
@@ -78,28 +67,30 @@ app.get('/', (req, res) => {
 // Help route
 app.get('/help', (req, res) => {
     res.json({
-        success: true,
-        message: 'Recipe Website API - Help & Contact',
-        endpoints: {
-            'GET /': 'API information and available endpoints',
-            'GET /help': 'This help page',
-            'GET /api/recipes': 'Get all recipes',
-            'GET /api/recipes/:id': 'Get recipe by ID',
-            'POST /api/recipes': 'Create new recipe (requires auth)',
-            'PUT /api/recipes/:id': 'Update recipe (requires auth)',
-            'DELETE /api/recipes/:id': 'Delete recipe (requires auth)',
-            'POST /api/users/register': 'Register new user',
-            'POST /api/users/login': 'Login and get JWT token',
-            'GET /api/users/profile': 'Get user profile (requires auth)',
-            'GET /api/users/favorites': 'Get favorite recipes (requires auth)',
-            'POST /api/users/favorites/:recipeId': 'Add to favorites (requires auth)'
-        },
-        contact: {
-            developer: 'Recipe Website API Student Project',
-            course: 'Backend Development with NodeJS - IUT MMI',
-            documentation: 'See project guide for complete API documentation'
-        },
-        status: 'Under development - TODO items need implementation'
+      success: true,
+      message: "Recipe Website API - Help & Contact",
+      endpoints: {
+        "GET /": "API information and available endpoints",
+        "GET /help": "This help page",
+        "GET /api/recipes": "Get all recipes",
+        "GET /api/recipes/:id": "Get recipe by ID",
+        "POST /api/recipes": "Create new recipe (requires auth)",
+        "PUT /api/recipes/:id": "Update recipe (requires auth)",
+        "DELETE /api/recipes/:id": "Delete recipe (requires auth)",
+        "POST /api/users/register": "Register new user",
+        "POST /api/users/login":
+          "Login and get JWT token (returns token in response)",
+        "GET /api/users/profile": "Get user profile (requires auth)",
+        "GET /api/users/favorites": "Get favorite recipes (requires auth)",
+        "POST /api/users/favorites/:recipeId":
+          "Add to favorites (requires auth)",
+      },
+      contact: {
+        developer: "Recipe Website API Student Project",
+        course: "Backend Development with NodeJS - IUT MMI",
+        documentation: "See project guide for complete API documentation",
+      },
+      status: "Under development - TODO items need implementation",
     });
 });
 
